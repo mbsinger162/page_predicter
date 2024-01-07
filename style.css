@@ -1,0 +1,10 @@
+/* Target Streamlit labels more specifically */
+div.stTextInput > label, div.stSelectbox > label {
+    font-size: 40px;  /* Adjust the size as needed */
+    font-weight: bold; /* Example to make it bold */
+}
+
+/* General label adjustment (might not work depending on Streamlit's internal structure) */
+label {
+    font-size: 40px;  /* Adjust the size as needed */
+}
