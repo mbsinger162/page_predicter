@@ -39,12 +39,17 @@ def get_hourly_predictions(start_day, end_day, start_hour, end_hour, temp_fahren
     total_pages = 0
     temp_celsius = (5/9) * (temp_fahrenheit - 32)
 
+    # Calculate the number of days in the range, considering the wrap-around from Sunday to Monday
+    day_range = (end_day - start_day + 7) % 7 + 1
+
     # Iterate over each day and hour in the interval
-    for day in range(start_day, end_day + 1):
-        for hour in range(start_hour if day == start_day else 0, end_hour + 1 if day == end_day else 24):
-            total_pages += predict_page_count(hour, temp_celsius, month, day % 7)
+    for day_offset in range(day_range):
+        current_day = (start_day + day_offset) % 7
+        for hour in range(start_hour if day_offset == 0 else 0, end_hour + 1 if current_day == end_day else 24):
+            total_pages += predict_page_count(hour, temp_celsius, month, current_day)
 
     return total_pages
+
 
 # Streamlit interface
 st.title('Yale Ophtho PGY2 Page Predictor')
